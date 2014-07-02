@@ -56,46 +56,56 @@ class Company_Details {
 					'description' => __( 'Provides an easy way for users to add details like phone, email, address, etc. to their theme.' ),
 			));
 
-			$wp_customize->add_setting( 'company_details_phone_setting', array(
-				'default'        => '',
-				'capability'     => 'edit_theme_options',
-				'type'           => 'option',
-			));
+				$wp_customize->add_setting( 'company_details_phone_setting', array(
+					'default'        => '',
+					'capability'     => 'edit_theme_options',
+					'type'           => 'option',
+					'sanitize_callback' => 'sanitize_company_text_field'
+				));
 
-			$wp_customize->add_control( 'company_details_phone_control', array(
-					'label'      => __( 'Company Phone Number' ),
-					'section'    => 'company_details_section',
-					'settings'   => 'company_details_phone_setting',
-					'type'       => 'text',
-			));
+					$wp_customize->add_control( 'company_details_phone_control', array(
+							'label'      => __( 'Company Phone Number' ),
+							'section'    => 'company_details_section',
+							'settings'   => 'company_details_phone_setting',
+							'type'       => 'text',
+					));
 
-			$wp_customize->add_setting( 'company_details_email_setting', array(
-				'default'        => '',
-				'capability'     => 'edit_theme_options',
-				'type'           => 'option',
-			));
+				$wp_customize->add_setting( 'company_details_email_setting', array(
+					'default'        => '',
+					'capability'     => 'edit_theme_options',
+					'type'           => 'option',
+					'sanitize_callback' => 'is_email'
+				));
 
-			$wp_customize->add_control( 'company_details_email_control', array(
-					'label'      => __( 'Company Email Address' ),
-					'section'    => 'company_details_section',
-					'settings'   => 'company_details_email_setting',
-					'type'       => 'text',
-			));
+					$wp_customize->add_control( 'company_details_email_control', array(
+							'label'      => __( 'Company Email Address' ),
+							'section'    => 'company_details_section',
+							'settings'   => 'company_details_email_setting',
+							'type'       => 'text',
+					));
 
-			$wp_customize->add_setting( 'company_details_address_setting', array(
-				'default'        => '',
-				'capability'     => 'edit_theme_options',
-				'type'           => 'option',
-			));
+				$wp_customize->add_setting( 'company_details_address_setting', array(
+					'default'        => '',
+					'capability'     => 'edit_theme_options',
+					'type'           => 'option',
+					'sanitize_callback' => 'sanitize_company_text_field'
+				));
 
-			$wp_customize->add_control( 'company_details_address_control', array(
-					'label'      => __( 'Company Street Address' ),
-					'section'    => 'company_details_section',
-					'settings'   => 'company_details_address_setting',
-					'type'       => 'text',
-			));
+					$wp_customize->add_control( 'company_details_address_control', array(
+							'label'      => __( 'Company Street Address' ),
+							'section'    => 'company_details_section',
+							'settings'   => 'company_details_address_setting',
+							'type'       => 'text',
+					));
 
 	} // function company_details_register
+
+}
+
+	// Sanitize our general text inputs
+	function sanitize_company_text_field( $input ) {
+		return sanitize_text_field( $input );
+	}
 
 // Setup the Theme Customizer settings and controls
 add_action( 'customize_register' , array( 'Company_Details' , 'company_details_register' ) );
